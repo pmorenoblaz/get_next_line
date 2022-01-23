@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
+# define BUFFER_SIZE 10
 #endif
 
 int	ft_getpos(const char *s, int c)
@@ -44,7 +44,6 @@ char	*ft_read_more(int fd, char **rest)
 	if (!aux)
 		return (0);
 	len = read(fd, aux, BUFFER_SIZE);
-	printf("\nqué hay en aux al leer = %s", aux);
 	if (len == 0)
 	{
 		free(aux);
@@ -56,18 +55,10 @@ char	*ft_read_more(int fd, char **rest)
 		free(*rest);
 		*rest = ft_strlcat(aux2, aux, ft_strlen(aux2) + len + 1);
 		free(aux2);
-		free(aux);
-		aux = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-		len = read(fd, aux, BUFFER_SIZE);
-		if (len == 0)
-			return (aux);
 	}
 	aux2 = aux;
-	printf("\nrest en la función = %s", *rest);
-	printf("\naux en la función = %s", aux);
 	free(aux);
 	aux = ft_strlcat(*rest, aux2, ft_strlen(*rest) + ft_strlen(aux2) + 1);
-	printf("\naux al concatenar = %s", aux);
 	return (aux);
 }
 
@@ -80,32 +71,21 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	aux = rest;
-	printf("\nrest al principio = %s", rest);
-	pos = ft_getpos(rest, 10);
+	pos = ft_getpos(rest, 10)+1;
 	if (pos == -1)
 	{
 		aux = ft_read_more(fd, &rest);
 		if (aux == 0)
 			return (0);
 	}
-	printf("\nrest después de leer = %s", rest);
-	printf("\naux después de leer = %s", aux);
-	pos = ft_getpos(aux, 10);
+	pos = ft_getpos(rest, 10);
 	if (pos != -1)
 	{
-		printf("\naux = %s", aux);
-		aux3 = ft_substr(aux, 0, pos + 1);
-		rest = ft_substr(aux, pos + 1, BUFFER_SIZE + 1 - pos);
-		free(aux);
-		aux = aux3;
-		printf("rest = %s", rest);
-		printf("\nfinal = %s", aux);
+		aux = ft_substr(rest, 0, pos);
+		aux3 = ft_substr(rest, pos, ft_strlen(rest) + 1 - pos);
+		free(rest);
+		rest = aux3;
 	}
-	printf("\nrest final = %s", rest);
-	printf("\n----------------------\n");
-	if (!aux && !rest)
-		return (0);
 	return (aux);
 }
 /*

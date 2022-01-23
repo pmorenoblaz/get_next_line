@@ -60,18 +60,13 @@ char	*ft_strlcat(char *dst, char *src, size_t dstsize)
 		s[pos[0]] = dst[pos[0]];
 		pos[0]++;
 	}
-	printf("\n------> dst(rest) antes de concatenar = %s", dst);
-	printf("\n------> src (aux) antes de concatenar = %s", src);
-	printf("\n------> s antes de concatenar = %s", s);
+	write(1, "hola\n", 5);
 	while (pos[0] < (dstsize - 1) && src[pos[1]])
 	{
 		s[pos[0]] = src[pos[1]];
 		pos[0]++;
 		pos[1]++;
 	}
-	printf("\n------> dst (rest) al concatenar = %s", dst);
-	printf("\n------> src (aux) al concatenar = %s", src);
-	printf("\nlo que concateno en la función s = %s", s);
 	s[pos[0]] = '\0';
 	return (s);
 }

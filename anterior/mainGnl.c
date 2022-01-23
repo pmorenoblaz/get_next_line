@@ -54,7 +54,8 @@ int				main()
         printf("line %i=>%s", i + 1, str);
 		free(str);
 		i++;
-		
+		if (i == 5)
+			sleep(30);
 	}
 //	system("leaks a.out");
 	return (0);
