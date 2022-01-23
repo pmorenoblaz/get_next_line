@@ -44,7 +44,7 @@ char	*ft_read_more(int fd, char **rest)
 	if (!aux)
 		return (0);
 	len = read(fd, aux, BUFFER_SIZE);
-	printf("\nqué hay en aux al leer = %s", aux);
+	// printf("\nqué hay en aux al leer = %s", aux);
 	if (len == 0)
 	{
 		free(aux);
@@ -63,11 +63,10 @@ char	*ft_read_more(int fd, char **rest)
 			return (aux);
 	}
 	aux2 = aux;
-	printf("\nrest en la función = %s", *rest);
-	printf("\naux en la función = %s", aux);
-	free(aux);
+	// printf("\nrest en la función = %s", *rest);
+	// printf("\naux en la función = %s", aux);
 	aux = ft_strlcat(*rest, aux2, ft_strlen(*rest) + ft_strlen(aux2) + 1);
-	printf("\naux al concatenar = %s", aux);
+	// printf("\naux al concatenar = %s", aux);
 	return (aux);
 }
 
@@ -81,7 +80,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	aux = rest;
-	printf("\nrest al principio = %s", rest);
+	// printf("\nrest al principio = %s", rest);
 	pos = ft_getpos(rest, 10);
 	if (pos == -1)
 	{
@@ -89,21 +88,23 @@ char	*get_next_line(int fd)
 		if (aux == 0)
 			return (0);
 	}
-	printf("\nrest después de leer = %s", rest);
-	printf("\naux después de leer = %s", aux);
+	// printf("\nrest después de leer = %s", rest);
+	// printf("\naux después de leer = %s", aux);
 	pos = ft_getpos(aux, 10);
 	if (pos != -1)
 	{
-		printf("\naux = %s", aux);
+		// printf("\naux = %s", aux);
 		aux3 = ft_substr(aux, 0, pos + 1);
 		rest = ft_substr(aux, pos + 1, BUFFER_SIZE + 1 - pos);
 		free(aux);
 		aux = aux3;
-		printf("rest = %s", rest);
-		printf("\nfinal = %s", aux);
+		// printf("rest = %s", rest);
+		// printf("\nfinal = %s", aux);
 	}
-	printf("\nrest final = %s", rest);
-	printf("\n----------------------\n");
+	printf("rest = %p", rest);
+	printf("\naux = %p ", aux);
+	// printf("\nrest final = %s", rest);
+	// printf("\n----------------------\n");
 	if (!aux && !rest)
 		return (0);
 	return (aux);
