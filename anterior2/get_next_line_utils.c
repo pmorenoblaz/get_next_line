@@ -45,16 +45,19 @@ size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 
 char	*ft_strlcat(char *dst, char *src, size_t dstsize)
 {
-	size_t	pos[2];
+	size_t	pos[3];
 	char	*s;
 
 	pos[0] = 0;
 	pos[1] = 0;
-	if (!dst)
-		return (src);
 	s = malloc(sizeof(char) * (ft_strlen(dst) + ft_strlen(src) + 1));
 	if (s == 0)
 		return (0);
+	if (!dst)
+	{
+		free(s);
+		return (src);
+	}
 	while (dst[pos[0]] && pos[0] < (dstsize - 1))
 	{
 		s[pos[0]] = dst[pos[0]];
@@ -75,33 +78,6 @@ char	*ft_strlcat(char *dst, char *src, size_t dstsize)
 	s[pos[0]] = '\0';
 	return (s);
 }
-
-// char	*ft_strlcat(char *dst, char *src)
-// {
-// 	char	*str;
-// 	size_t	i;
-// 	size_t	s1len;
-// 	size_t	s2len;
-
-// 	s1len = ft_strlen(dst);
-// 	s2len = ft_strlen(src);
-// 	str = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
-// 	if (!str)
-// 		return (0);
-// 	i = 0;
-// 	while (i < (s1len + s2len + 1))
-// 	{
-// 		((unsigned char *)str)[i] = '\0';
-// 		i++;
-// 	}
-// 	i = -1;
-// 	while (++i < s1len)
-// 		str[i] = dst[i];
-// 	i = -1;
-// 	while (++i < s2len)
-// 		str[i + s1len] = src[i];
-// 	return (str);
-// }
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {

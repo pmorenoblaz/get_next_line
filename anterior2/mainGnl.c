@@ -45,18 +45,15 @@ int				main()
 	char		*str;
 	int			i;
 
-	i =0;
+	i = 0;
 	fd = open("nl", O_RDONLY);
 // 	get_next_line(fd, &str);
 //	printf("%s", str); 
-str = get_next_line(fd);
-	while ((i <= 6))
+	while ((str = get_next_line(fd)))
 	{
         printf("line %i=>%s", i + 1, str);
-		if (str && ft_strlen(str) > 0)
-			free(str);
+		free(str);
 		i++;
-		str = get_next_line(fd);
 		// if (i == 5)
 			// sleep(30);
 	}
