@@ -32,7 +32,6 @@ int	ft_read_more(int fd, char **rest)
 	{
 		buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 		len = read(fd, buffer, BUFFER_SIZE);
-		// printf("el buffer es: %s", buffer);
 		if (len == 0)
 		{
 			free(buffer);
@@ -42,10 +41,7 @@ int	ft_read_more(int fd, char **rest)
 		aux = ft_strlcat(*rest, buffer);
 		free(buffer);
 		if (*rest)
-		{
 			free(*rest);
-			*rest = 0;
-		}
 		*rest = aux;
 	}
 	return (len);
@@ -66,10 +62,8 @@ char	*get_next_line(int fd)
 	if (pos == -1)
 	{
 		len = ft_read_more(fd, &rest);
-		// printf("final es: %d\n", final);
-		if (len == 0 && final == 0)
+		if (len == 0 && final == 0 && rest)
 		{
-			// printf("el buffer es: %s", rest);
 			final = 1;
 			if (*rest)
 			{
