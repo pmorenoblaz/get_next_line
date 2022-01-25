@@ -25,8 +25,8 @@ int		ft_read_more(int fd, char **str);
 char	*ft_check_buffer(int fd, char *rest);
 size_t	ft_strlen(char *s);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
-// char	*ft_strlcat(char *dst, char *src, size_t dstsize);
-char	*ft_strlcat(char *dst, char *src);
+char	*ft_strlcat(char *dst, char *src, size_t dstsize);
+// char	*ft_strlcat(char *dst, char *src);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 

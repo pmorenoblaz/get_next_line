@@ -60,7 +60,7 @@ str = get_next_line(fd);
 		// if (i == 5)
 			// sleep(30);
 	}
-	//system("leaks a.out");
+	system("leaks a.out");
 	return (0);
 }
 
