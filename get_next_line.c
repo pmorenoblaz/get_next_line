@@ -1,6 +1,4 @@
-# ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
-#endif
+
 
 #include "get_next_line.h"
 
@@ -37,27 +35,19 @@ int	ft_read_more(int fd, char **rest)
 		// printf("el buffer es: %s", buffer);
 		if (len == 0)
 		{
-			//printf("\nel buffer es: %s\n", buffer);
-			//printf("%s rest funcion\n", *rest);
 			free(buffer);
 			return (0);
 		}
 		pos = ft_getpos(buffer, 10);
 		aux = ft_strlcat(*rest, buffer);
 		free(buffer);
-		if(*rest)
+		if (*rest)
 		{
 			free(*rest);
 			*rest = 0;
 		}
-			
 		*rest = aux;
 	}
-
-	//printf("%p rest funcion\n", rest);
-	//printf("%p buffer\n", buffer);
-	//printf("%p aux en funcion\n", aux);
-	// printf("el rest es: %s", *rest);
 	return (len);
 }
 
@@ -76,12 +66,17 @@ char	*get_next_line(int fd)
 	if (pos == -1)
 	{
 		len = ft_read_more(fd, &rest);
+		// printf("final es: %d\n", final);
 		if (len == 0 && final == 0)
 		{
+			// printf("el buffer es: %s", rest);
 			final = 1;
-			//free(rest);
-			//printf("\n->%s rest\n", rest);
-			return (rest);
+			if (*rest)
+			{
+				return (rest);
+			}
+			free(rest);
+			return (0);
 		}
 		else if (len == 0)
 			return (0);
@@ -92,19 +87,8 @@ char	*get_next_line(int fd)
 	{
 		aux3 = ft_substr(aux, 0, pos + 1);
 		rest = ft_substr(aux, pos + 1, ft_strlen(aux) + 1 - pos);
-		// printf("%p aux3\n", aux3);
-		// printf("%p rest\n", rest);
-		// printf("%p aux\n", aux);
 		free(aux);
 		aux = aux3;
 	}
-	// printf("\n..................\n");
-	// printf("%p rest final\n", rest);
-	// if (!aux && !rest)
-	// {
-	// 	// free(rest);
-	// 	return (0);
-	// }
-	 //printf("el rest final es: %s", rest);
 	return (aux);
 }
