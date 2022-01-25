@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pmoreno- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/25 18:30:54 by pmoreno-          #+#    #+#             */
+/*   Updated: 2022/01/25 18:30:58 by pmoreno-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -53,34 +63,31 @@ char	*get_next_line(int fd)
 	static int	final;
 	char		*aux;
 	char		*aux3;
-	int			pos;
-	int			len;
+	int			pos[2];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, &final, 0) == -1 || BUFFER_SIZE <= 0)
 		return (0);
-	pos = ft_getpos(rest, 10);
-	if (pos == -1)
+	pos[0] = ft_getpos(rest, 10);
+	if (pos[0] == -1)
 	{
-		len = ft_read_more(fd, &rest);
-		if (len == 0 && final == 0 && rest)
+		pos[1] = ft_read_more(fd, &rest);
+		if (pos[1] == 0 && final == 0 && rest)
 		{
 			final = 1;
 			if (*rest)
-			{
 				return (rest);
-			}
 			free(rest);
 			return (0);
 		}
-		else if (len == 0)
+		else if (pos[1] == 0)
 			return (0);
 	}
 	aux = rest;
-	pos = ft_getpos(aux, 10);
-	if (pos != -1)
+	pos[0] = ft_getpos(aux, 10);
+	if (pos[0] != -1)
 	{
-		aux3 = ft_substr(aux, 0, pos + 1);
-		rest = ft_substr(aux, pos + 1, ft_strlen(aux) + 1 - pos);
+		aux3 = ft_substr(aux, 0, pos[0] + 1);
+		rest = ft_substr(aux, pos[0] + 1, ft_strlen(aux) + 1 - pos[0]);
 		free(aux);
 		aux = aux3;
 	}
