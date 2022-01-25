@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   get_next_line.c									:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: pmoreno- <marvin@42.fr>					+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2021/10/07 10:03:30 by pmoreno-		  #+#	#+#			 */
+/*   Updated: 2021/10/07 10:04:44 by pmoreno-		 ###   ########.fr	   */
+/*																			*/
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
 # ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1
 #endif
-
-#include "get_next_line.h"
 
 int	ft_getpos(const char *s, int c)
 {
@@ -37,8 +49,6 @@ int	ft_read_more(int fd, char **rest)
 		// printf("el buffer es: %s", buffer);
 		if (len == 0)
 		{
-			//printf("\nel buffer es: %s\n", buffer);
-			//printf("%s rest funcion\n", *rest);
 			free(buffer);
 			return (0);
 		}
@@ -46,11 +56,7 @@ int	ft_read_more(int fd, char **rest)
 		aux = ft_strlcat(*rest, buffer);
 		free(buffer);
 		if(*rest)
-		{
 			free(*rest);
-			*rest = 0;
-		}
-			
 		*rest = aux;
 	}
 
@@ -64,27 +70,16 @@ int	ft_read_more(int fd, char **rest)
 char	*get_next_line(int fd)
 {
 	static char	*rest;
-	static int	final;
 	char		*aux;
 	char		*aux3;
 	int			pos;
-	int			len;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	pos = ft_getpos(rest, 10);
 	if (pos == -1)
 	{
-		len = ft_read_more(fd, &rest);
-		if (len == 0 && final == 0)
-		{
-			final = 1;
-			//free(rest);
-			//printf("\n->%s rest\n", rest);
-			return (rest);
-		}
-		else if (len == 0)
-			return (0);
+		ft_read_more(fd, &rest);
 	}
 	aux = rest;
 	pos = ft_getpos(aux, 10);
@@ -100,11 +95,11 @@ char	*get_next_line(int fd)
 	}
 	// printf("\n..................\n");
 	// printf("%p rest final\n", rest);
-	// if (!aux && !rest)
-	// {
-	// 	// free(rest);
-	// 	return (0);
-	// }
-	 //printf("el rest final es: %s", rest);
+	if (!aux && !rest)
+	{
+		free(rest);
+		return (0);
+	}
+	// printf("el rest final es: %s", rest);
 	return (aux);
 }

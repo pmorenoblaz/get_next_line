@@ -46,7 +46,7 @@ int				main()
 	int			i;
 
 	i =0;
-	fd = open("41_no_nl", O_RDONLY);
+	fd = open("nl", O_RDONLY);
 // 	get_next_line(fd, &str);
 //	printf("%s", str); 
 str = get_next_line(fd);
